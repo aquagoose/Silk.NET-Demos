@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
 using ShadowMap.Shared;
@@ -14,7 +15,7 @@ public class Main : MainWindow
     private Vector2 _cameraRot;
     private Vector2 _lastMousePos;
 
-    private Model[] _models;
+    private List<Model> _models;
     
     protected override void Initialize()
     {
@@ -24,20 +25,32 @@ public class Main : MainWindow
         Gl.Enable(EnableCap.Multisample);
         Gl.Enable(EnableCap.DepthTest);
         Gl.DepthFunc(DepthFunction.Lequal);
+        Gl.Enable(EnableCap.CullFace);
         Gl.FrontFace(FrontFaceDirection.Ccw);
         Gl.CullFace(CullFaceMode.Front);
 
         Cube cube = new Cube();
         Texture2D texture = new Texture2D("Content/Textures/awesomeface.png");
-        _models = new[]
+        _models = new List<Model>()
         {
             new Model(cube, texture)
             {
-                Scale = new Vector3(20, 1, 20)
+                Scale = new Vector3(10, 1, 10)
             }
         };
+        
+        Random random = Random.Shared;
 
-        Camera = new Camera(new Size(Window.Size.X, Window.Size.Y), new Vector3(0, 2, -5), Quaternion.Identity);
+        for (int i = 0; i < 10; i++)
+        {
+            _models.Add(new Model(cube, texture)
+            {
+                Position = new Vector3(random.NextFloat(-5, 5), random.NextFloat(1, 3), random.NextFloat(-5, 5)),
+                Rotation = Quaternion.CreateFromYawPitchRoll(random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI))
+            });
+        }
+
+        Camera = new Camera(new Size(Window.Size.X, Window.Size.Y), new Vector3(0, 2, 0), Quaternion.Identity);
 
         Input.MouseVisible = false;
     }
@@ -54,7 +67,7 @@ public class Main : MainWindow
             Input.MouseVisible = !Input.MouseVisible;
 
         const float sensitivity = 0.01f;
-        Vector2 deltaPos = Input.MousePosition - _lastMousePos;
+        Vector2 deltaPos = Input.MouseVisible ? Vector2.Zero : Input.MousePosition - _lastMousePos;
         _cameraRot.X -= deltaPos.X * sensitivity;
         _cameraRot.Y += deltaPos.Y * sensitivity;
         _cameraRot.Y = MathHelper.Clamp(_cameraRot.Y, -MathF.PI / 2, MathF.PI / 2);
