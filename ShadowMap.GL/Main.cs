@@ -14,8 +14,10 @@ public class Main : MainWindow
     public static Camera Camera;
     private Vector2 _cameraRot;
     private Vector2 _lastMousePos;
+    private ShadowMap _shadowMap;
 
     private List<Model> _models;
+    private Model _floor;
     
     protected override void Initialize()
     {
@@ -30,27 +32,27 @@ public class Main : MainWindow
         Gl.CullFace(CullFaceMode.Front);
 
         Cube cube = new Cube();
-        Texture2D texture = new Texture2D("Content/Textures/awesomeface.png");
-        _models = new List<Model>()
+        _models = new List<Model>();
+
+        _floor = new Model(cube, new Texture2D("Content/Textures/wood.png"))
         {
-            new Model(cube, texture)
-            {
-                Scale = new Vector3(10, 1, 10)
-            }
+            Scale = new Vector3(20, 1, 20)
         };
         
         Random random = Random.Shared;
-
-        for (int i = 0; i < 10; i++)
+        Texture2D texture = new Texture2D("Content/Textures/awesomeface.png");
+        
+        for (int i = 0; i < 20; i++)
         {
             _models.Add(new Model(cube, texture)
             {
-                Position = new Vector3(random.NextFloat(-5, 5), random.NextFloat(1, 3), random.NextFloat(-5, 5)),
-                Rotation = Quaternion.CreateFromYawPitchRoll(random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI))
+                Position = new Vector3(random.NextFloat(-10, 10), random.NextFloat(1f, 1f), random.NextFloat(-10, 10)),
+                //Rotation = Quaternion.CreateFromYawPitchRoll(random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI))
             });
         }
 
         Camera = new Camera(new Size(Window.Size.X, Window.Size.Y), new Vector3(0, 2, 0), Quaternion.Identity);
+        _shadowMap = new ShadowMap(new Size(1024, 1024));
 
         Input.MouseVisible = false;
     }
@@ -99,8 +101,27 @@ public class Main : MainWindow
         Gl.Clear((uint) ClearBufferMask.ColorBufferBit | (uint) ClearBufferMask.DepthBufferBit | (uint) ClearBufferMask.StencilBufferBit);
         
         Camera.GenerateViewMatrix();
+
+        Vector3 lightPos = new Vector3(1, -1, 1) * 1;
+
+        Gl.Viewport(0, 0, 1024, 1024);
+        Matrix4x4 ls = _shadowMap.Use(lightPos);
+        Gl.Clear(ClearBufferMask.DepthBufferBit);
+        
+        Gl.CullFace(CullFaceMode.Back);
         
         foreach (Model model in _models)
-            model.Draw(Camera, new Vector3(1, -1, 1));
+            model.DrawShadow(ls, _shadowMap.Effect);
+        
+        _shadowMap.UnUse();
+        
+        Gl.CullFace(CullFaceMode.Front);
+        
+        Gl.Viewport(0, 0, 1280, 720);
+
+        _floor.Draw(Camera, lightPos, ls, _shadowMap);
+        
+        foreach (Model model in _models)
+            model.Draw(Camera, lightPos, ls, _shadowMap);
     }
 }

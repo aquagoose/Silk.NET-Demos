@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using ShadowMap.Shared;
+using Silk.NET.Input;
 using Silk.NET.OpenGL;
 using static ShadowMapGL.Main;
 
@@ -70,7 +71,7 @@ public class Model : IDisposable
         Gl.BindBuffer(GLEnum.ElementArrayBuffer, 0);
     }
 
-    public unsafe void Draw(Camera camera, Vector3 lightPos)
+    public unsafe void Draw(Camera camera, Vector3 lightPos, Matrix4x4 lightSpace, ShadowMap map)
     {
         Gl.BindVertexArray(_vao);
         _effect.Use();
@@ -79,7 +80,12 @@ public class Model : IDisposable
         _effect.SetUniform("uModel",
             Matrix4x4.CreateScale(Scale) * Matrix4x4.CreateFromQuaternion(Rotation) *
             Matrix4x4.CreateTranslation(Position));
-        _effect.SetUniform("uCamera", camera.ViewMatrix * camera.ProjectionMatrix);
+        if (Input.KeyDown(Key.C))
+        {
+            _effect.SetUniform("uCamera", lightSpace);
+        }
+        else
+            _effect.SetUniform("uCamera", camera.ViewMatrix * camera.ProjectionMatrix);
         _effect.SetUniform("uCameraPos", camera.Position);
         
         // Material
@@ -93,10 +99,24 @@ public class Model : IDisposable
         _effect.SetUniform("uSun.Ambient", new Vector3(0.1f));
         _effect.SetUniform("uSun.diffuse", new Vector3(0.7f));
         _effect.SetUniform("uSun.specular", new Vector3(1.0f));
+        _effect.SetUniform("uLightSpace", lightSpace);
         
         _texture.Bind(0);
         _texture.Bind(1);
+        
+        _effect.SetUniform("uShadowMap", 2);
+        map.Bind(2);
 
+        Gl.DrawElements(PrimitiveType.Triangles, _numIndices, DrawElementsType.UnsignedInt, null);
+    }
+
+    public unsafe void DrawShadow(Matrix4x4 lightSpace, Effect effect)
+    {
+        Gl.BindVertexArray(_vao);
+        effect.Use();
+        effect.SetUniform("uLightSpace", lightSpace);
+        effect.SetUniform("uModel", Matrix4x4.CreateScale(Scale) * Matrix4x4.CreateFromQuaternion(Rotation) *
+                                    Matrix4x4.CreateTranslation(Position));
         Gl.DrawElements(PrimitiveType.Triangles, _numIndices, DrawElementsType.UnsignedInt, null);
     }
     
