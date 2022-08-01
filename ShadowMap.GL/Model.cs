@@ -96,7 +96,7 @@ public class Model : IDisposable
         
         // Light
         _effect.SetUniform("uSun.direction", lightPos);
-        _effect.SetUniform("uSun.Ambient", new Vector3(0.1f));
+        _effect.SetUniform("uSun.ambient", new Vector3(0.1f));
         _effect.SetUniform("uSun.diffuse", new Vector3(0.7f));
         _effect.SetUniform("uSun.specular", new Vector3(1.0f));
         _effect.SetUniform("uLightSpace", lightSpace);

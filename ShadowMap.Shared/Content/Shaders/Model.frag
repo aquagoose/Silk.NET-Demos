@@ -1,5 +1,3 @@
-#version 330 core
-
 struct Material
 {
     sampler2D albedo;
@@ -61,6 +59,8 @@ float CalculateShadow(vec4 lightSpace)
 {
     vec3 proj = lightSpace.xyz / lightSpace.w;
     proj = proj * 0.5 + 0.5;
+    if (proj.z > 1.0)
+        return 0.0;
     float closestDepth = texture(uShadowMap, proj.xy).r;
     float currentDepth = proj.z;
     float bias = 0.001;

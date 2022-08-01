@@ -13,8 +13,12 @@ public class ShadowMap : IDisposable
 
     public readonly Effect Effect;
     
+    public readonly Size Size;
+    
     public unsafe ShadowMap(Size size)
     {
+        Size = size;
+        
         _fbo = Gl.GenFramebuffer();
         DepthMap = Gl.GenTexture();
         Gl.BindTexture(TextureTarget.Texture2D, DepthMap);
@@ -22,8 +26,10 @@ public class ShadowMap : IDisposable
             0, PixelFormat.DepthComponent, PixelType.Float, null);
         Gl.TexParameter(TextureTarget.Texture2D, GLEnum.TextureMinFilter, (int) TextureMinFilter.Nearest);
         Gl.TexParameter(TextureTarget.Texture2D, GLEnum.TextureMagFilter, (int) TextureMagFilter.Nearest);
-        Gl.TexParameter(TextureTarget.Texture2D, GLEnum.TextureWrapS, (int) TextureWrapMode.Repeat);
-        Gl.TexParameter(TextureTarget.Texture2D, GLEnum.TextureWrapT, (int) TextureWrapMode.Repeat);
+        Gl.TexParameter(TextureTarget.Texture2D, GLEnum.TextureWrapS, (int) TextureWrapMode.ClampToBorder);
+        Gl.TexParameter(TextureTarget.Texture2D, GLEnum.TextureWrapT, (int) TextureWrapMode.ClampToBorder);
+        fixed (float* color = new float[] { 1.0f, 1.0f, 1.0f, 1.0f })
+            Gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureBorderColor, color);
         Gl.BindFramebuffer(FramebufferTarget.Framebuffer, _fbo);
         Gl.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment,
             TextureTarget.Texture2D, DepthMap, 0);

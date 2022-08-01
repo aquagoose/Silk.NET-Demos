@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using Cubic.Graphics;
+using Cubic.Graphics.Platforms.OpenGL33;
 using ShadowMap.Shared;
 using Silk.NET.Input;
-using Silk.NET.OpenGL;
 
-namespace ShadowMapGL;
+namespace ShadowMap.CubicGraphics;
 
 public class Main : MainWindow
 {
-    public static GL Gl;
+    public static GraphicsDevice Device;
     private Camera _camera;
     private Vector2 _cameraRot;
     private Vector2 _lastMousePos;
@@ -18,21 +17,18 @@ public class Main : MainWindow
 
     private List<Model> _models;
     private Model _floor;
-
+    
     private Cube _cube;
     private Texture2D _texture;
     
     protected override void Initialize()
     {
         base.Initialize();
-        
-        Gl = GL.GetApi(Window.GLContext);
-        Gl.Enable(EnableCap.Multisample);
-        Gl.Enable(EnableCap.DepthTest);
-        Gl.DepthFunc(DepthFunction.Lequal);
-        Gl.Enable(EnableCap.CullFace);
-        Gl.FrontFace(FrontFaceDirection.Ccw);
-        Gl.CullFace(CullFaceMode.Front);
+
+        Device = new OpenGl33GraphicsDevice(Window.GLContext);
+        Device.Options.DepthTest = DepthTest.LessEqual;
+        Device.Options.CullFace = CullFace.Front;
+        Device.Options.CullDirection = CullDirection.CounterClockwise;
 
         _cube = new Cube();
         _models = new List<Model>();
@@ -43,13 +39,13 @@ public class Main : MainWindow
         };
         
         _texture = new Texture2D("Content/Textures/awesomeface.png");
-
+        
         AddModels(true);
 
         _camera = new Camera(new Size(Window.Size.X, Window.Size.Y), new Vector3(9.101653f, 11.751301f, -12.974878f),
             new Quaternion(-0.3225966f, 0.28561804f, -0.10277174f, -0.8965443f));
         _shadowMap = new ShadowMap(new Size(1024, 1024));
-        
+
         Input.MouseVisible = false;
     }
 
@@ -85,7 +81,7 @@ public class Main : MainWindow
             _camera.Position -= _camera.Up * cameraSpeed * (float) obj;
 
         _lastMousePos = Input.MousePosition;
-
+        
         if (Input.KeyPressed(Key.R))
         {
             _models.Clear();
@@ -105,34 +101,33 @@ public class Main : MainWindow
     {
         base.Draw(obj);
         
-        Gl.ClearColor(Color.CornflowerBlue);
-        Gl.Clear((uint) ClearBufferMask.ColorBufferBit | (uint) ClearBufferMask.DepthBufferBit | (uint) ClearBufferMask.StencilBufferBit);
+        Device.Clear(Color.CornflowerBlue, ClearFlags.Color | ClearFlags.Depth | ClearFlags.Stencil);
         
         _camera.GenerateViewMatrix();
 
         Vector3 lightPos = new Vector3(1, -1, 1) * 1;
 
-        Gl.Viewport(0, 0, (uint) _shadowMap.Size.Width, (uint) _shadowMap.Size.Height);
+        Device.Viewport = new Rectangle(Point.Empty, _shadowMap.Size);
         Matrix4x4 ls = _shadowMap.Use(lightPos);
-        Gl.Clear(ClearBufferMask.DepthBufferBit);
-        
-        Gl.CullFace(CullFaceMode.Back);
+        Device.Clear(Color.Black, ClearFlags.Depth);
+
+        Device.Options.CullFace = CullFace.Back;
         
         foreach (Model model in _models)
             model.DrawShadow(ls, _shadowMap.Effect);
         
         _shadowMap.UnUse();
-        
-        Gl.CullFace(CullFaceMode.Front);
-        
-        Gl.Viewport(0, 0, (uint) Window.Size.X, (uint) Window.Size.Y);
+
+        Device.Options.CullFace = CullFace.Front;
+
+        Device.Viewport = new Rectangle(0, 0, Window.Size.X, Window.Size.Y);
 
         _floor.Draw(_camera, lightPos, ls, _shadowMap);
         
         foreach (Model model in _models)
             model.Draw(_camera, lightPos, ls, _shadowMap);
     }
-
+    
     private void AddModels(bool randomizeRot)
     {
         Random random = Random.Shared;

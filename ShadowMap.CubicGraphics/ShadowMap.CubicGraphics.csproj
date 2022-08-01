@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Cubic\Cubic.Graphics.Platforms.OpenGL33\Cubic.Graphics.Platforms.OpenGL33.csproj" />
+      <ProjectReference Include="..\Cubic\Cubic.Graphics\Cubic.Graphics.csproj" />
+      <ProjectReference Include="..\ShadowMap.Shared\ShadowMap.Shared.csproj" />
+    </ItemGroup>
+
+</Project>

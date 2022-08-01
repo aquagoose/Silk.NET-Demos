@@ -14,9 +14,13 @@ public class Effect : IDisposable
     {
         uint vShader = Gl.CreateShader(ShaderType.VertexShader);
         uint fShader = Gl.CreateShader(ShaderType.FragmentShader);
-        
-        Gl.ShaderSource(vShader, File.ReadAllText(vertex));
-        Gl.ShaderSource(fShader, File.ReadAllText(fragment));
+
+        string shader = File.ReadAllText(vertex);
+        shader = shader.Insert(0, "#version 330 core\n");
+        Gl.ShaderSource(vShader, shader);
+        shader = File.ReadAllText(fragment);
+        shader = shader.Insert(0, "#version 330 core\n");
+        Gl.ShaderSource(fShader, shader);
         
         CompileShader(vShader);
         CompileShader(fShader);

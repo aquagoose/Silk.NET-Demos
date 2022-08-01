@@ -1,0 +1,3 @@
+[submodule "Cubic"]
+	path = Cubic
+	url = https://github.com/IsometricSoftware/Cubic
