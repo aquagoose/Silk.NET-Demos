@@ -1,8 +1,7 @@
 # Shadow map sample
 An easy to understand shadow map sample for [Silk.NET](https://github.com/dotnet/Silk.NET) (OpenGL) and [Cubic.Graphics](https://github.com/IsometricSoftware/Cubic/tree/Cubic.Next/Cubic.Graphics).
 
-<img src="https://i.rollbot.net/shadowdemo1.png" alt="Demo 1" width="256" />
-<img src="https://i.rollbot.net/shadowdemo2.png" alt="Demo 2" width="256" />
+<img src="https://i.rollbot.net/shadowdemo1.png" alt="Demo 1" height="256" /> <img src="https://i.rollbot.net/shadowdemo2.png" alt="Demo 2" height="256" />
 
 The code has been designed to be easy to understand, and, apart from the base rendering framework, follows along verbatim with the [LearnOpenGL shadow mapping tutorial](https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping).
 
