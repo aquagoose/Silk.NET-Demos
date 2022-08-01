@@ -1,7 +1,7 @@
 using System;
 using ShadowMap.Shared;
 using Silk.NET.OpenGL;
-using static ShadowMapGL.MainWindow;
+using static ShadowMapGL.Main;
 
 namespace ShadowMapGL;
 

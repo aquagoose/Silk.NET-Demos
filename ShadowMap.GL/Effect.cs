@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Numerics;
 using Silk.NET.OpenGL;
-using static ShadowMapGL.MainWindow;
+using static ShadowMapGL.Main;
 
 namespace ShadowMapGL;
 

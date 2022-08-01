@@ -2,7 +2,7 @@ using System;
 using System.Numerics;
 using ShadowMap.Shared;
 using Silk.NET.OpenGL;
-using static ShadowMapGL.MainWindow;
+using static ShadowMapGL.Main;
 
 namespace ShadowMapGL;
 
@@ -70,7 +70,7 @@ public class Model : IDisposable
         Gl.BindBuffer(GLEnum.ElementArrayBuffer, 0);
     }
 
-    public unsafe void Draw(Matrix4x4 camera, Vector3 lightPos)
+    public unsafe void Draw(Camera camera, Vector3 lightPos)
     {
         Gl.BindVertexArray(_vao);
         _effect.Use();
@@ -79,8 +79,8 @@ public class Model : IDisposable
         _effect.SetUniform("uModel",
             Matrix4x4.CreateScale(Scale) * Matrix4x4.CreateFromQuaternion(Rotation) *
             Matrix4x4.CreateTranslation(Position));
-        _effect.SetUniform("uCamera", camera);
-        _effect.SetUniform("uCameraPos", camera.Translation);
+        _effect.SetUniform("uCamera", camera.ViewMatrix * camera.ProjectionMatrix);
+        _effect.SetUniform("uCameraPos", camera.Position);
         
         // Material
         _effect.SetUniform("uMaterial.albedo", 0);

@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
 using ShadowMapGL;
 
-using MainWindow window = new MainWindow();
+using Main window = new Main();
 window.Run();
