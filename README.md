@@ -17,6 +17,7 @@ Simply clone the project, run `git submodule init`, and then pick one of the two
 * **M** - Toggle mouse cursor visibility
 * **R** - Randomize the positions of the cubes, however they will be locked to the plane (like the second screenshot)
 * **T** - Randomize the positions of the cubes, randomizing the height and rotation as well (like the first screenshot)
+* **C** - Hold to view the scene from the perspective of the light.
 
 ### License
 As this project uses some code from [LearnOpenGL](https://learnopengl.com/), which I do not own, it has been released into the public domain. If there are any issues with the license, please contact me and I will change it.
