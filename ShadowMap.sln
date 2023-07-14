@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowMap.GL", "ShadowMap.GL\ShadowMap.GL.csproj", "{44CAE218-F9E7-43A6-A7DC-9F965D1293B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowMap.Shared", "ShadowMap.Shared\ShadowMap.Shared.csproj", "{7D416147-BA84-48C1-AC8B-91DF3CBDF68B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowMap.CubicGraphics", "ShadowMap.CubicGraphics\ShadowMap.CubicGraphics.csproj", "{C8096411-DA83-4F96-B084-82E16132905C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cubic.Graphics", "Cubic\Cubic.Graphics\Cubic.Graphics.csproj", "{9E84D8AD-A1B4-4BC3-9258-CF93347DCC3E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cubic.Graphics.Platforms.OpenGL33", "Cubic\Cubic.Graphics.Platforms.OpenGL33\Cubic.Graphics.Platforms.OpenGL33.csproj", "{28A06D54-CFDB-40DD-A42A-0D4CA06AE43C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,17 +19,5 @@ Global
 		{7D416147-BA84-48C1-AC8B-91DF3CBDF68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D416147-BA84-48C1-AC8B-91DF3CBDF68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D416147-BA84-48C1-AC8B-91DF3CBDF68B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8096411-DA83-4F96-B084-82E16132905C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8096411-DA83-4F96-B084-82E16132905C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8096411-DA83-4F96-B084-82E16132905C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8096411-DA83-4F96-B084-82E16132905C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E84D8AD-A1B4-4BC3-9258-CF93347DCC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E84D8AD-A1B4-4BC3-9258-CF93347DCC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E84D8AD-A1B4-4BC3-9258-CF93347DCC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E84D8AD-A1B4-4BC3-9258-CF93347DCC3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28A06D54-CFDB-40DD-A42A-0D4CA06AE43C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28A06D54-CFDB-40DD-A42A-0D4CA06AE43C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28A06D54-CFDB-40DD-A42A-0D4CA06AE43C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28A06D54-CFDB-40DD-A42A-0D4CA06AE43C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
