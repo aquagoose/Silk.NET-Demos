@@ -33,7 +33,7 @@ public class Main : MainWindow
         Gl.DepthFunc(DepthFunction.Lequal);
         Gl.Enable(EnableCap.CullFace);
         Gl.FrontFace(FrontFaceDirection.Ccw);
-        Gl.CullFace(CullFaceMode.Front);
+        Gl.CullFace(TriangleFace.Front);
 
         _cube = new Cube();
         _models = new List<Model>();
@@ -117,14 +117,14 @@ public class Main : MainWindow
         Matrix4x4 ls = _shadowMap.Use(lightPos);
         Gl.Clear(ClearBufferMask.DepthBufferBit);
         
-        Gl.CullFace(CullFaceMode.Back);
+        Gl.CullFace(TriangleFace.Back);
         
         foreach (Model model in _models)
             model.DrawShadow(ls, _shadowMap.Effect);
         
         _shadowMap.UnUse();
         
-        Gl.CullFace(CullFaceMode.Front);
+        Gl.CullFace(TriangleFace.Front);
         
         Gl.Viewport(0, 0, (uint) Window.Size.X, (uint) Window.Size.Y);
 

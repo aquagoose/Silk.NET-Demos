@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# 
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowMap.GL", "ShadowMap.GL\ShadowMap.GL.csproj", "{44CAE218-F9E7-43A6-A7DC-9F965D1293B0}"
+#
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilkDemos.Rendering3D", "SilkDemos.Rendering3D\SilkDemos.Rendering3D.csproj", "{44CAE218-F9E7-43A6-A7DC-9F965D1293B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowMap.Shared", "ShadowMap.Shared\ShadowMap.Shared.csproj", "{7D416147-BA84-48C1-AC8B-91DF3CBDF68B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilkDemos.Common", "SilkDemos.Common\SilkDemos.Common.csproj", "{7D416147-BA84-48C1-AC8B-91DF3CBDF68B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
