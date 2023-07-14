@@ -37,7 +37,7 @@ public class ShadowMap : IDisposable
         Gl.ReadBuffer(GLEnum.None);
         Gl.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
 
-        Effect = new Effect("Content/Shaders/Shadow.vert", "Content/Shaders/Shadow.frag");
+        Effect = new Effect("Shaders/Shadow.vert", "Shaders/Shadow.frag");
     }
 
     public Matrix4x4 Use(Vector3 lightPos)

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <RootNamespace>ShadowMapGL</RootNamespace>
@@ -17,6 +17,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ShadowMap.Shared\ShadowMap.Shared.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Content Include="Shaders/**/*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

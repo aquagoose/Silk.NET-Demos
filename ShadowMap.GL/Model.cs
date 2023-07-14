@@ -49,7 +49,7 @@ public class Model : IDisposable
                 GLEnum.StaticDraw);
         }
 
-        _effect = new Effect("Content/Shaders/Model.vert", "Content/Shaders/Model.frag");
+        _effect = new Effect("Shaders/Model.vert", "Shaders/Model.frag");
         _effect.Use();
 
         const uint stride = 32;

@@ -38,7 +38,7 @@ public class Camera
         ViewMatrix = Matrix4x4.CreateLookAt(Position, Position + Forward, Up);
     }
 
-    private void GenerateProjectionMatrix(Size winSize)
+    public void GenerateProjectionMatrix(Size winSize)
     {
         ProjectionMatrix =
             Matrix4x4.CreatePerspectiveFieldOfView(_fov, winSize.Width / (float) winSize.Height, _near, _far);

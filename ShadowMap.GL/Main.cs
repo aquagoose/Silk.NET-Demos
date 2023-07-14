@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Numerics;
 using ShadowMap.Shared;
 using Silk.NET.Input;
+using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 
 namespace ShadowMapGL;
@@ -145,5 +146,13 @@ public class Main : MainWindow
                 Rotation = randomizeRot ? Quaternion.CreateFromYawPitchRoll(random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI), random.NextFloat(-2 * MathF.PI, 2 * MathF.PI)) : Quaternion.Identity
             });
         }
+    }
+
+    protected override void OnResize(Vector2D<int> obj)
+    {
+        base.OnResize(obj);
+        
+        Gl.Viewport(0, 0, (uint) obj.X, (uint) obj.Y);
+        _camera.GenerateProjectionMatrix(new Size(obj.X, obj.Y));
     }
 }
